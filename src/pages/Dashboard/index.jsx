@@ -7,8 +7,6 @@ const Dashboard = () => {
 
     const trendingMovieFetcher = async () => {
         const res = await axios.get(process.env.REACT_APP_BASE_URL+"/trending/movie/week?api_key="+process.env.REACT_APP_TMDB_KEY)
-        console.log(process.env.REACT_APP_BASE_URL+"/trending/movie/week?api_key="+process.env.REACT_APP_TMDB_KEY)
-        console.log(res.data.results)
         setTrendingMovies(res.data.results)
     }
 
@@ -23,7 +21,7 @@ const Dashboard = () => {
             </h1>
             <div className='flex flex-row gap-[30px] flex-wrap mx-auto fl-xs:max-w-[430px] fl-sm:max-w-[661px] fl-md:max-w-[895px] fl-lg:max-w-[1120px]'>
                 {trendingMovies.map((movie, index) => (
-                    <Card movie={movie} />
+                    <Card key={index} movie={movie} />
                 ))}
             </div>
         </>
