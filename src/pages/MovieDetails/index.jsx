@@ -3,17 +3,18 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {AiFillStar} from 'react-icons/ai'
 import "../../styles/MovieDetails.css"
+import Review from '../../components/Review'
 
 const MovieDetials = () => {
   const { id } = useParams()
   const [movieDetails, setMovieDetails] = useState({});
-  const [movieReviews, setMovieReviews] = useState({});
+  const [movieReviews, setMovieReviews] = useState([]);
 
   const reviewFetcher = async () => {
     if (id) {
       const res = await axios.get(process.env.REACT_APP_BASE_URL+`/movie/${id}/reviews?api_key=`+process.env.REACT_APP_TMDB_KEY)
       setMovieReviews(res.data.results)
-      // console.log(res.data)
+      console.log(res.data)
     }
   }
 
@@ -22,7 +23,7 @@ const MovieDetials = () => {
       const res = await axios.get(process.env.REACT_APP_BASE_URL+`/movie/${id}?api_key=`+process.env.REACT_APP_TMDB_KEY)
       // console.log(process.env.REACT_APP_BASE_URL+`/movie/${id}?api_key=`+process.env.REACT_APP_TMDB_KEY)
       setMovieDetails(res.data)
-      console.log(res.data)
+      // console.log(res.data)
     }
   }
 
@@ -36,8 +37,8 @@ const MovieDetials = () => {
   return (
     <>
       <div className='bg-image-holder '>
-        <img src={`https://image.tmdb.org/t/p/original${movieDetails?.backdrop_path}`} className="absolute top-0 left-0 w-screen opacity-20 h-[100%] object-cover" />
-        <div className='fl-xs:max-w-[430px] fl-sm:max-w-[661px] fl-md:max-w-[895px] fl-lg:max-w-[1120px] pt-[50px] mx-auto relative z-10'>
+        <img src={`https://image.tmdb.org/t/p/original${movieDetails?.backdrop_path}`} className="absolute top-0 left-0 w-screen opacity-20 h-[100%] object-cover -translate-x-[20px] xs:-translate-x-[40px] sm:-translate-x-[60px] md:-translate-x-[100px]" />
+        <div className='fl-xs:max-w-[430px] fl-sm:max-w-[661px] fl-md:max-w-[895px] fl-lg:max-w-[1120px] pt-[50px] mx-auto relative z-10 -translate-x-[20px] xs:-translate-x-[40px] sm:-translate-x-[60px] md:-translate-x-[100px]'>
           <div className='flex flex-col fl-sm:flex-row gap-5 h-[100%] items-center'>
               <img src={`https://image.tmdb.org/t/p/original${movieDetails?.poster_path}`} className="w-[200px]" />
               <div className='p-6 fl-xs:p-0'>
@@ -46,7 +47,7 @@ const MovieDetials = () => {
                 <div className='flex gap-5 text-[15px]'>
                   <div className='p-4 py-1 bg-[black] rounded-full'>{movieDetails?.release_date?.slice(0,4)}</div>
                   <div className='p-4 py-1 bg-[black] rounded-full flex items-center gap-2'>
-                    <AiFillStar color='yellow' />
+                    <AiFillStar color='#ffc400' />
                     <p>{Math.round(movieDetails?.vote_average * 10) / 10}</p>
                   </div>
                   <div className='p-4 py-1 bg-[black] rounded-full'>
@@ -58,7 +59,11 @@ const MovieDetials = () => {
         </div>
       </div>
       <div className='fl-xs:max-w-[430px] fl-sm:max-w-[661px] fl-md:max-w-[895px] fl-lg:max-w-[1120px] pt-[50px] mx-auto'>
-        <h1>Reviews</h1>
+        <h1 className='text-4xl text-center mb-[5px]'>Reviews</h1>
+        <h2 className='text-center text-[#aaa] mb-[30px]'>{movieReviews?.length} reviews</h2>
+        {movieReviews?.map((review, index) => (
+          <Review review={review} key={index} />
+        ))}
       </div>
     </>
   )

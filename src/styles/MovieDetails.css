@@ -1,6 +1,6 @@
 .bg-image-holder {
-    position: absolute;
-    left: 0;
+    position: relative;
+    /* left: 0; */
     width: 100vw;
     min-height: 450px;
 }
