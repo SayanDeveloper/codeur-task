@@ -16,3 +16,5 @@
 - TMDB API (for movies data)
 
 ### Site is deployed in netlify : https://codeur.netlify.app
+
+#### Happy coding :-)
